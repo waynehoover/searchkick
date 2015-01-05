@@ -4,6 +4,9 @@ require "minitest/autorun"
 require "minitest/pride"
 require "logger"
 
+require "typhoeus/adapters/faraday"
+Ethon.logger = Logger.new("/dev/null")
+
 ENV["RACK_ENV"] = "test"
 
 Minitest::Test = Minitest::Unit::TestCase unless defined?(Minitest::Test)
