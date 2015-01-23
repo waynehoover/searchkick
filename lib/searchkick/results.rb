@@ -46,7 +46,7 @@ module Searchkick
                 hit.except("fields").merge(hit["fields"])
               end
             result["id"] ||= result["_id"] # needed for legacy reasons
-            Hashie::Mash.new(result)
+            OpenStruct.new(result)
           end
         end
       end

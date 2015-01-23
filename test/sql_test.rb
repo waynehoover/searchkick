@@ -270,7 +270,7 @@ class TestSql < Minitest::Test
 
   def test_load_false
     store_names ["Product A"]
-    assert_kind_of Hash, Product.search("product", load: false).first
+    assert_kind_of OpenStruct, Product.search("product", load: false).first
   end
 
   def test_load_false_methods
@@ -280,7 +280,7 @@ class TestSql < Minitest::Test
 
   def test_load_false_with_include
     store_names ["Product A"]
-    assert_kind_of Hash, Product.search("product", load: false, include: [:store]).first
+    assert_kind_of OpenStruct, Product.search("product", load: false, include: [:store]).first
   end
 
   # select
@@ -288,7 +288,7 @@ class TestSql < Minitest::Test
   def test_select
     store [{name: "Product A", store_id: 1}]
     result = Product.search("product", load: false, select: [:name, :store_id]).first
-    assert_equal %w[id name store_id], result.keys.reject{|k| k.start_with?("_") }.sort
+    assert %i(id name store_id).all?{|method| result.respond_to?(method) }
     assert_equal ["Product A"], result.name # this is not great
   end
 
